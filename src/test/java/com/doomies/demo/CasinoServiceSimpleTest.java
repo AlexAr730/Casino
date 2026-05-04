@@ -1,11 +1,11 @@
 package com.doomies.demo;
 
-import com.doomies.demo.service.CasinoService;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import com.doomies.demo.service.CasinoService;
 
-public class CasinoServiceSimpleTest {
+class CasinoServiceSimpleTest {
 
     @Test
     void testMontoInvalido() {

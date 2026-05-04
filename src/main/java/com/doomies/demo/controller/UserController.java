@@ -1,16 +1,23 @@
 package com.doomies.demo.controller;
 
+import java.util.List;
+
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.doomies.demo.model.User;
 import com.doomies.demo.service.UserService;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/users")
 public class UserController {
-    
-        private final UserService service;
+
+    private final UserService service;
 
     public UserController(UserService service) {
         this.service = service;
@@ -22,7 +29,11 @@ public class UserController {
     }
 
     @PostMapping
-    public User crearUsuario(@RequestBody User user) {
+    public User crearUsuario(@RequestBody UserDTO userDTO) {
+        User user = new User();
+        user.setNombre(userDTO.getNombre());
+        user.setEmail(userDTO.getEmail());
+
         return service.crearUsuario(user);
     }
 
@@ -35,5 +46,4 @@ public class UserController {
     public void eliminarUsuario(@PathVariable Long id) {
         service.eliminarUsuario(id);
     }
-
 }
