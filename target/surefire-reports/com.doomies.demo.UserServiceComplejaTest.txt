@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.doomies.demo.UserServiceComplejaTest
+-------------------------------------------------------------------------------
+Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.911 s -- in com.doomies.demo.UserServiceComplejaTest

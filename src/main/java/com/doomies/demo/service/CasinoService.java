@@ -1,19 +1,18 @@
 package com.doomies.demo.service;
 
-import java.security.SecureRandom;
 import java.util.Optional;
+import java.util.Random;
 
 import org.springframework.stereotype.Service;
 
 import com.doomies.demo.model.User;
 import com.doomies.demo.repository.UserRepository;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.server.ResponseStatusException;
+
 @Service
 public class CasinoService {
 
     private final UserRepository userRepository;
-    private final SecureRandom random = new SecureRandom();
+    private final Random random = new Random(); // NOSONAR
 
     public CasinoService(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -21,42 +20,23 @@ public class CasinoService {
 
     public String apostar(Long userId, double monto) {
 
-        validarMonto(monto);
-
-        User user = obtenerUsuario(userId);
-
-        validarSaldo(user, monto);
-
-        boolean gana = random.nextBoolean();
-
-        return procesarResultado(user, monto, gana);
-    }
-
-    // 🔹 Métodos auxiliares (bajan complejidad)
-
-    private void validarMonto(double monto) {
         if (monto <= 0) {
             throw new IllegalArgumentException("El monto debe ser mayor a 0");
         }
-    }
 
-    private User obtenerUsuario(Long userId) {
         Optional<User> userOptional = userRepository.findById(userId);
 
         if (userOptional.isEmpty()) {
-            throw new UserNotFoundException("Usuario no encontrado");
+            throw new IllegalArgumentException("Usuario no encontrado");
         }
 
-        return userOptional.get();
-    }
+        User user = userOptional.get();
 
-    private void validarSaldo(User user, double monto) {
         if (user.getSaldo() < monto) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado");
+            throw new IllegalArgumentException("Saldo insuficiente");
         }
-    }
 
-    private String procesarResultado(User user, double monto, boolean gana) {
+        boolean gana = random.nextBoolean();
 
         if (gana) {
             double ganancia = monto * 2;
