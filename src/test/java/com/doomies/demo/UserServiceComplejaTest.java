@@ -10,9 +10,10 @@ import org.mockito.ArgumentCaptor;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-public class UserServiceTestCompleja {
+class UserServiceComplejaTest {
 
     private UserRepository repo;
     private UserService service;
